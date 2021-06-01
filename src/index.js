@@ -9,7 +9,7 @@ import imagesTpl from './templates/images.hbs';
 const imagesList = new Images();
 
 refs.form.addEventListener('submit', onClickButtonSubmit);
-refs.loadMore.addEventListener('click', fetchArticles);
+refs.loadMore.addEventListener('click', fetchMoreArticles);
 refs.list.addEventListener('click', onImageClick);
 
 function onClickButtonSubmit(e) {
@@ -27,23 +27,37 @@ function onClickButtonSubmit(e) {
 }
 
 function fetchArticles() {
-  imagesList.fetchImages().then(images => {
-    renderImages(images);
+  imagesList.fetchImages()
+    .then(images => {
+      renderImages(images);
 
-    if (refs.list.children.length !== 0) {
-      refs.loadMore.style.display = 'inline-block';
-    } else {
-      refs.loadMore.style.display = 'none';
-    }
-  });
+      if (refs.list.children.length !== 0) {
+        refs.loadMore.style.display = 'inline-block';
+      } else {
+        refs.loadMore.style.display = 'none';
+      };
+    });
 }
 
 function renderImages(images) {
   refs.list.insertAdjacentHTML('beforeend', imagesTpl(images));
-  refs.list.scrollIntoView({
+}
+
+function fetchMoreArticles() {
+  imagesList.fetchImages()
+    .then(images => {
+      renderMoreImages(images);
+
+      refs.loadMore.style.display = 'inline-block';
+    });
+}
+
+function renderMoreImages(images) {
+  refs.list.insertAdjacentHTML('beforeend', imagesTpl(images));
+  refs.loadMore.scrollIntoView({
     behavior: 'smooth',
     block: 'end',
-  });
+});
 }
 
 function onImageClick(e) {

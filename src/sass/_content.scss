@@ -8,6 +8,7 @@
   margin-bottom: 30px;
 
   width: calc(33% - 20px);
+  height: 500px;
 }
 
 .cards-item:not(:nth-child(3n)) {
@@ -15,7 +16,7 @@
 }
 
 .photo-card img {
-  max-height: 400px;
+  max-height: 500px;
   max-width: 600px;
 }
 
